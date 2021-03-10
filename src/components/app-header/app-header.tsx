@@ -17,6 +17,10 @@ import {
     AccountCircle,
 } from '../../svg';
 
+import {
+    PAGE_PATH,
+} from '../../constants';
+
 const AppHeader: React.FC = () => {
     return (
         <AppBar>
@@ -27,13 +31,13 @@ const AppHeader: React.FC = () => {
                 MyStore
             </Title>
             <MenuNavigation>
-                <Link to={'/'} >
+                <Link to={PAGE_PATH.HOME_PAGE} >
                     <ItemMenu>Home</ItemMenu>
                 </Link>
-                <Link to={'/'} >
+                <Link to={PAGE_PATH.ABOUT_PAGE} >
                     <ItemMenu>About</ItemMenu>
                 </Link>
-                <Link to={'/'} >
+                <Link to={PAGE_PATH.CONTACT_PAGE} >
                     <ItemMenu>Contact</ItemMenu>
                 </Link>
             </MenuNavigation>
