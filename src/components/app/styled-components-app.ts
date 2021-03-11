@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 const ContentApp = styled.main`
-    max-width: 100%; 
+    width: 100%; 
     display: flex;
-    justify-content: center;
 `;
 
 const Wrapper = styled.div`
+    width: 100%; 
     display: flex;
+    justify-content: center;
     margin-top: 70px;
 `;
 

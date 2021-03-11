@@ -2,20 +2,24 @@ import styled from 'styled-components';
 
 const ContentSideBar = styled.aside`
     max-width: 350px;
-    padding-right: 10px;
     border-right: 1px solid #b7d4ec;
     flex: 1 1 200px;
 `;
 
-const NavigationCatalog = styled.section`
+const Container = styled.div`
     min-width: 250px;
+`;
+
+const NavigationCatalog = styled.section`
+    max-width: 250px;
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #b7d4ec;
+    margin-left: auto;
 `;
 
 const TitleSideBar= styled.h4`
-    max-width: 200px;
+    width: 100%;
     text-align: center;
     margin: 0;
     margin-top: 10px;
@@ -35,14 +39,15 @@ const ItemCatalog = styled.p`
 `;
 
 const FooterSideBar = styled.section`
-    max-width: 200px;
-    display: flex;
-    flex-direction: column;
+    max-width: 250px;
+    margin-left: auto;
 `;
 
 const Message = styled.div`
+    max-width: 250px;
     padding: 10px;
     border-bottom: 1px solid #b7d4ec;
+    margin-left: auto;
 `;
 
 const TitleMessage = styled.h4`
@@ -58,7 +63,8 @@ const TypographyMessage = styled.p`
 `;
 
 const ActionMessage = styled.div`
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
 `;
 
 const Button = styled.button`
@@ -75,8 +81,11 @@ const Button = styled.button`
 `;
 
 const SocialMessager = styled.div`
+    display: flex;
+    flex-direction: column;
     padding: 10px;
     border-bottom: 1px solid #b7d4ec;
+    align-items: center;
 `;
 
 const TypographyImageIcon = styled.p`
@@ -114,6 +123,7 @@ const ItemSectionsHelpers = styled.p`
 
 export {
     ContentSideBar,
+    Container,
 
     TitleSideBar,
     NavigationCatalog,

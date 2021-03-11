@@ -1,81 +1,81 @@
 import styled from 'styled-components';
 
 const ContentContact = styled.div`
-    max-width: 1000px;
+    max-width: 1200px;
     display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
     padding: 10px;
-    flex: 1 1 200px;
+    flex-grow: 1;
+`;
+
+const Wrapper = styled.div`
+    max-width: 900px;
+    flex-grow: 1;
 `;
 
 const Title = styled.h1`
-    text-align: center;
     color: #065da7;
+    text-align: center;
 `;
 
 const TitleSection = styled.h2`
-    text-align: center;
     color: #065da7;
+    text-align: center;
 `;
 
 const SectionContacts = styled.div`
-    max-width: 1000px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     flex-wrap: wrap;
 `;
 
 const Contact = styled.div`
-    max-width: 400px;
-    /* flex: 1 1 200; */
-    flex-grow: 1;
+    max-width: 350px;
+    flex: 1 1 200px;
 `;
 
 const NameDepartment = styled.p`
-    margin: 0;
-    padding: 15px;
-    font-size: 20px;
-    font-weight: 500px;
+    margin: 30px 0;
     color: #065da7;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
 `;
 
 const NumberPhone = styled.p`
-    font-size: 18px;
-    margin: 0;
-    padding: 15px;
+   margin: 30px 0;
+   font-size: 18px;
+   text-align: center;
 `;
 
 const ScheduleWork = styled.div`
     max-width: 400px;
-    flex-grow: 1;
-    /* flex: 1 1 200; */
+    flex: 1 1 200px;
 `;
 
 const TitleItem = styled.h3`
-    margin: 10px;
     color: #065da7;
+    text-align: center;
 `;
 
-const ItemScheduleWork = styled.div`
+const ItemScheduleWork = styled.p`
     display: flex;
+    justify-content: space-around;
+    margin: 0;
 `;
 
 const DaysWeek = styled.p`
-    max-width: 200px;
-    margin: 0;
-    padding: 10px;
-    flex-grow: 1;
+   font-size: 18px;
+   margin-right: 5px; 
 `;
 
 const WorkTime = styled.p`
-    max-width: 200px;
-    margin: 0;
-    padding: 10px;
-    flex-grow: 1;
+   font-size: 18px;
 `;
 
 export {
     ContentContact,
+    Wrapper,
     Title,
     TitleSection,
     SectionContacts,
