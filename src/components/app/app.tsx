@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 // Customer components
 import AppHeader from '../app-header';
@@ -8,6 +8,8 @@ import HomePage from '../pages/home-page';
 import AboutPage from '../pages/about-page';
 import ContactPage from '../pages/contact-page';
 import AppFooter from '../app-footer';
+import AuthorizationPage from '../pages/authorization-page';
+// import SingUp from '../pages/sing-up';
 
 // Styled components 
 import {
@@ -25,7 +27,7 @@ const App = () => {
 
   return (
     <div>
-      { Auth ? (
+      { Auth && (
         <>
           <AppHeader />
 
@@ -39,14 +41,16 @@ const App = () => {
                 <Route path={PAGE_PATH.ABOUT_PAGE} component={AboutPage} />
                 
                 <Route path={PAGE_PATH.CONTACT_PAGE} component={ContactPage} />
+
+                <Route path={PAGE_PATH.SING_IN} component={AuthorizationPage} />
+
+                <Redirect to={PAGE_PATH.HOME_PAGE} />
               </Switch>
             </Wrapper>
           </ContentApp>
           
           <AppFooter />
         </>
-      ) : (
-        <div>Not Authorization</div>
       ) }
       
     </div>

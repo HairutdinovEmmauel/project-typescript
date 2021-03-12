@@ -1,3 +1,6 @@
-export const HOME_PAGE = '/';
-export const ABOUT_PAGE = '/about-store';
-export const CONTACT_PAGE = '/contact';
+export const HOME_PAGE: string = '/';
+export const ABOUT_PAGE: string = '/about-store';
+export const CONTACT_PAGE: string = '/contact';
+
+export const SING_IN: string = '/sing-in';
+export const SING_UP: string = '/sing-up'; 

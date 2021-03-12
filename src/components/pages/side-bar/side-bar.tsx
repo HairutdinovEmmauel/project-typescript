@@ -56,9 +56,9 @@ const SideBar: React.FC = () => {
                     <SocialMessager>
                         <TypographyImageIcon>We in social messager</TypographyImageIcon>
                         <div>
-                            { ARRAY_URL_SOCIAL_MESSAGER.MESSAGERS.map((url) => {
+                            { ARRAY_URL_SOCIAL_MESSAGER.MESSAGERS.map(({ id, url }) => {
                                 return (
-                                    <ImageIcon src={url} />
+                                    <ImageIcon key={id} src={url} />
                                 )
                             }) }
                         </div>

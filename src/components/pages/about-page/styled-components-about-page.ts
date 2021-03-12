@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+import {
+    IMAGES_LOGOTYPE
+} from '../../../constants';
+
 const ContentAbout = styled.div`
     max-width: 1170px;
     display: flex;
@@ -24,7 +28,7 @@ const TitleTypography = styled.h3`
 const Logotype = styled.div`
     width: 300px;
     height: 300px;
-    background-image: url('http://www.pt-mkp.com/images/product_icon.png?crc=107442653');
+    background-image: url('${IMAGES_LOGOTYPE.LOGOTYPE_BOX}');
     background-repeat: no-repeat;
     background-size: cover;
 `;
