@@ -8,7 +8,7 @@ import HomePage from '../pages/home-page';
 import AboutPage from '../pages/about-page';
 import ContactPage from '../pages/contact-page';
 import AppFooter from '../app-footer';
-import AuthorizationPage from '../pages/authorization-page';
+import AuthorizationPage from '../pages/auth-page';
 // import SingUp from '../pages/sing-up';
 
 // Styled components 

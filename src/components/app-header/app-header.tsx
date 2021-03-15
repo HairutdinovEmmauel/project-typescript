@@ -1,5 +1,13 @@
 import React, { useState, useRef, useEffect, } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+// Typing
+import { RootStateType } from '../../reducer';
+import { 
+    AuthActionTypes,
+    AuthStateI as MapStatePropsI 
+} from '../../types/auth';
 
 // Styled components 
 import {
@@ -16,17 +24,25 @@ import {
     ItemNavigationPanel,
 } from './styled-components-app-header';
 
-// icons svg
+// Icons svg
 import {
     MenuIcon,
     AccountCircle,
 } from '../../svg';
 
+// Constats
 import {
     PAGE_PATH,
 } from '../../constants';
+import { ThunkDispatch } from 'redux-thunk';
 
-const AppHeader: React.FC = () => {
+interface MapDispatchPropsI {
+
+}
+
+type AuthPropsType = MapStatePropsI & MapDispatchPropsI;
+
+const AppHeader: React.FC<AuthPropsType> = ({ loading, isAdmin, isAuth, error }) => {
 
     const [ openNavigation, setopenNavigation ] = useState(false);
     const refContainer = useRef(null);
@@ -73,35 +89,55 @@ const AppHeader: React.FC = () => {
                 </Link>
             </MenuNavigation>
             <RightNavigationMenu>
-                <Link to={PAGE_PATH.SING_IN} >
-                    <ItemMenu>Sing in</ItemMenu>
-                </Link>
-                <Link to={PAGE_PATH.SING_UP} >
-                    <ItemMenu>Sing up</ItemMenu>
-                </Link>
-                <IconButton onClick={openNavigationAccount} >
-                    <AccountCircle />
-                        {
-                            openNavigation && (
-                                <NavigationAccount ref={refContainer} >
-                                    <NavigationPanel>
-                                        <ItemNavigationPanel>
-                                            Profile
-                                        </ItemNavigationPanel>
-                                        <ItemNavigationPanel>
-                                            Your orders
-                                        </ItemNavigationPanel>
-                                        <ItemNavigationPanel>
-                                            Sing out
-                                        </ItemNavigationPanel>
-                                    </NavigationPanel>
-                                </NavigationAccount>
-                            ) 
-                        }
-                </IconButton>
+                {
+                    isAuth ? (
+                        <IconButton onClick={openNavigationAccount} >
+                            <AccountCircle />
+                                {
+                                    openNavigation && (
+                                        <NavigationAccount ref={refContainer} >
+                                            <NavigationPanel>
+                                                <ItemNavigationPanel>
+                                                    Profile
+                                                </ItemNavigationPanel>
+                                                <ItemNavigationPanel>
+                                                    Your orders
+                                                </ItemNavigationPanel>
+                                                <ItemNavigationPanel>
+                                                    Sing out
+                                                </ItemNavigationPanel>
+                                            </NavigationPanel>
+                                        </NavigationAccount>
+                                    ) 
+                                }
+                        </IconButton>
+                    ) : (
+                        <Link to={PAGE_PATH.SING_IN} >
+                            <IconButton>
+                                <AccountCircle />
+                            </IconButton>
+                        </Link>
+                    )
+                }
+               
             </RightNavigationMenu>
         </AppBar>
     )
 }
 
-export default AppHeader;
+const mapStateToProps = ({ auth }: RootStateType) => {
+    return {
+        loading: auth.loading,
+        isAdmin: auth.isAdmin,
+        isAuth: auth.isAuth,
+        error: auth.error,
+    }
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<RootStateType, unknown, AuthActionTypes>) => {
+    return {
+
+    }
+}
+
+export default connect<MapStatePropsI, MapDispatchPropsI, {}, RootStateType>(mapStateToProps, mapDispatchToProps)(AppHeader);

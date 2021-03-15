@@ -26,7 +26,7 @@ const Form = styled.div`
     padding: 20px;
 `;
 
-const FormLabel = styled.div`
+const FormLabel = styled.label`
     padding: 5px;   
 `;
 
@@ -59,23 +59,37 @@ const FormPassword = styled.input`
 `;
 
 const SelectOther = styled.div`
-
+    display: flex;
+    justify-content: space-around;
 `;
 
 const RememberMe = styled.input`
-
+    margin: 5px;
 `;
 
-const RemindPassword = styled.div`
+const RemindPassword = styled.span`
+    display: block;
+    padding: 5px;
+    color: #065da7;
 
+    &:hover {
+        color: #ea4949;
+        text-decoration: underline;
+    }
 `;
 
 const FormActions = styled.div`
 
 `;
 
-const ButtonLogin = styled.div`
-
+const ButtonLogin = styled.button`
+    font-size: 18px;
+    padding: 5px;
+    text-align: center;
+    background: #065da7;
+    border: 1px solid #065da7;
+    border-radius: 5px;
+    color: #ffffff;
 `;
 
 const ButtonRegister = styled.div`

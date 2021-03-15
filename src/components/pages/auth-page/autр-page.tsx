@@ -15,7 +15,7 @@ import {
     ButtonLogin,
     ButtonRegister,
     SelectUserAccount,
-} from './styled-components-authorization-page';
+} from './styled-components-auth-page';
 
 const AuthorizationPage: React.FC = () => {
     return (
@@ -32,13 +32,13 @@ const AuthorizationPage: React.FC = () => {
                     <SelectOther>
                         <div>
                             <RememberMe type="checkbox" />
-                            <FormLabel></FormLabel>
+                            <FormLabel>Remember me</FormLabel>
                         </div>
-                        <RemindPassword />
+                        <RemindPassword>Ramind password</RemindPassword>
                     </SelectOther>
                     <FormActions>
-                        <ButtonLogin />
-                        <ButtonRegister />
+                        <ButtonLogin>Login</ButtonLogin>
+                        <ButtonRegister>Register</ButtonRegister>
                     </FormActions>
                 </Form>
                 <SelectUserAccount>
