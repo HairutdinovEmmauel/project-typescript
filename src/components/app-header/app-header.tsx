@@ -7,7 +7,7 @@ import { RootStateType } from '../../reducer';
 import { 
     AuthActionTypes,
     AuthStateI as MapStatePropsI 
-} from '../../types/auth';
+} from '../../types/reducers/auth';
 
 // Styled components 
 import {
