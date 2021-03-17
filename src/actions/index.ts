@@ -1,6 +1,11 @@
-import { requestRegister, requestLogin } from './request-auth';
+import { 
+    requestRegister,
+    requestVerification, 
+    requestLogin, 
+} from './request-auth';
 
 export {
     requestRegister,
+    requestVerification,
     requestLogin,
 };

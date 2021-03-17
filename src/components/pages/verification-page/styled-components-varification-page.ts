@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
-const ContentSingUp = styled.div`
+const ContentVerificationPage = styled.div`
     max-width: 1000px;
     display: flex;
     justify-content: center;
     flex-grow: 1;
 `;
 
-const FormSingUp = styled.div`
+const FormVerificationPage = styled.div`
     max-width: 700px;
     margin-top: 30px;
     border-radius: 10px;
@@ -58,41 +58,8 @@ const FormInput = styled.input`
     }
 `;
 
-const SelectOther = styled.div`
-    display: flex;
-    justify-content: space-around;
-`;
-
-const RememberMe = styled.input`
-    margin: 5px;
-`;
-
-const RemindPassword = styled.span`
-    display: block;
-    padding: 5px;
-    color: #065da7;
-
-    &:hover {
-        color: #ea4949;
-        text-decoration: underline;
-    }
-`;
-
 const FormActions = styled.div`
 
-`;
-
-const ButtonLogin = styled.button`
-    width: 100%;
-    display: block;
-    padding: 5px;
-    margin-bottom: 20px; 
-    border-radius: 5px;
-    border: 1px solid #065da7;
-    background: #065da7;
-    font-size: 18px;
-    text-align: center;
-    color: #ffffff;
 `;
 
 const ButtonRegister = styled.button`
@@ -108,14 +75,9 @@ const ButtonRegister = styled.button`
     color: #ffffff;
 `;
 
-const SelectUserAccount = styled.div`
-    max-width: 360px;
-    flex-grow: 1;
-`;
-
 export {
-    ContentSingUp,
-    FormSingUp,
+    ContentVerificationPage,
+    FormVerificationPage,
 
     TitleForm,
     Section,
@@ -123,13 +85,6 @@ export {
     FormLabel,
     FormInput,
 
-    SelectOther,
-    RememberMe,
-    RemindPassword,
-
     FormActions,
-    ButtonLogin,
     ButtonRegister,
-
-    SelectUserAccount,
 }

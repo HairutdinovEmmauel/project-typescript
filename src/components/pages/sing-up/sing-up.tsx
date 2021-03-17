@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // Styled Components
@@ -28,17 +29,18 @@ import { FormRegisterI } from '../../../types/constants/initial-local-state';
 import { 
     INITIAL_LOCAL_STATE,
     FORM_NAME_KEYS,
+    PAGE_PATH,
 } from '../../../constants';
 
 // Utils
 import {
     editForm,
-} from '../../../utils/form-helpers'
+} from '../../../utils';
 
 // Actions
 import { requestRegister } from '../../../actions';
 
-type MapStatePropsType = Pick<AuthStateI, 'loading' | 'error'>
+type MapStatePropsType = Pick<AuthStateI, 'loading' | 'error'| 'user'>
 
 interface MapDispatchPropsI {
     requestRegister: (formRegister: FormRegisterI) => void
@@ -46,20 +48,24 @@ interface MapDispatchPropsI {
 
 type SingUpPropsType = MapStatePropsType & MapDispatchPropsI;
 
-const SingUp: React.FC<SingUpPropsType> = ({ loading, error, requestRegister }) => {
+const SingUp: React.FC<SingUpPropsType> = ({ loading, user, error, requestRegister }) => {
 
     const [ formRegister, setFormRegister ] = useState({ ...INITIAL_LOCAL_STATE.INITIAL_FORM_REGISTER });
 
-    const sendForm = (event: React.SyntheticEvent<EventTarget>): void => {
-        event.preventDefault();
+    const history = useHistory();
+
+    if(user.email) {
+        history.push(PAGE_PATH.VERIFICATION_PAGE);
     }
     
-    const sendFormRegister = (): void => {
+    const sendFormRegister = (event: React.SyntheticEvent<EventTarget>): void => {
+        event.preventDefault();
+
         requestRegister({ ...formRegister });
     }
 
     const onChangeForm = (event:  React.SyntheticEvent<HTMLInputElement>): void => {
-        const editedForm = editForm(formRegister, event);
+        const editedForm = editForm<FormRegisterI>(formRegister, event);
 
         setFormRegister({ ...editedForm });
     }
@@ -69,7 +75,7 @@ const SingUp: React.FC<SingUpPropsType> = ({ loading, error, requestRegister }) 
             <FormSingUp>
                 <TitleForm>Authorization</TitleForm>
                 <Section>
-                    <Form onSubmit={sendForm} >
+                    <Form onSubmit={sendFormRegister} >
                         <FormLabel>Please enter your name</FormLabel>
                         <FormInput 
                             type="text" 
@@ -126,7 +132,7 @@ const SingUp: React.FC<SingUpPropsType> = ({ loading, error, requestRegister }) 
                             <RemindPassword>Ramind password</RemindPassword>
                         </SelectOther>
                         <FormActions>
-                            <ButtonRegister onClick={sendFormRegister} >Register</ButtonRegister>
+                            <ButtonRegister>Register</ButtonRegister>
                         </FormActions>
                     </Form>
                     <SelectUserAccount>
@@ -142,6 +148,7 @@ const mapStateToProps = ({ auth }: RootStateType) => {
     return {
         loading: auth.loading,
         error: auth.error,
+        user: auth.user,
     }
 }
 

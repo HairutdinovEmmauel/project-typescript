@@ -5,4 +5,5 @@ export enum FORM_KEYS {
     email = 'email',
     password = 'password',
     repeatPassword = 'repeatPassword',
+    verificationCode = 'verificationCode',
 }

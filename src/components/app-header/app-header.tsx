@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 // Typing
+import { ThunkDispatch } from 'redux-thunk';
 import { RootStateType } from '../../reducer';
 import { 
     AuthActionTypes,
@@ -30,11 +31,13 @@ import {
     AccountCircle,
 } from '../../svg';
 
+// Utils 
+
+
 // Constats
 import {
     PAGE_PATH,
 } from '../../constants';
-import { ThunkDispatch } from 'redux-thunk';
 
 interface MapDispatchPropsI {
 
@@ -42,7 +45,7 @@ interface MapDispatchPropsI {
 
 type AuthPropsType = MapStatePropsI & MapDispatchPropsI;
 
-const AppHeader: React.FC<AuthPropsType> = ({ loading, isAdmin, isAuth, error }) => {
+const AppHeader: React.FC<AuthPropsType> = ({ loading, user, isAdmin, isAuth, linkVerification, error }) => {
 
     const [ openNavigation, setopenNavigation ] = useState(false);
     const refContainer = useRef(null);
@@ -68,6 +71,8 @@ const AppHeader: React.FC<AuthPropsType> = ({ loading, isAdmin, isAuth, error })
     }
 
     useOutsideAlerter(refContainer);
+
+    
 
     return (
         <AppBar>
@@ -128,8 +133,10 @@ const AppHeader: React.FC<AuthPropsType> = ({ loading, isAdmin, isAuth, error })
 const mapStateToProps = ({ auth }: RootStateType) => {
     return {
         loading: auth.loading,
+        user: auth.user,
         isAdmin: auth.isAdmin,
         isAuth: auth.isAuth,
+        linkVerification: auth.linkVerification,
         error: auth.error,
     }
 }

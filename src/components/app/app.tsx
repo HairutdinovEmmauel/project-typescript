@@ -9,6 +9,7 @@ import AboutPage from '../pages/about-page';
 import ContactPage from '../pages/contact-page';
 import AppFooter from '../app-footer';
 import SingUp from '../pages/sing-up';
+import VerificationPage from '../pages/verification-page';
 // import SingUp from '../pages/sing-up';
 
 // Styled components 
@@ -44,6 +45,8 @@ const App = () => {
 
                 <Route path={PAGE_PATH.SING_IN} component={SingUp} />
 
+                <Route path={PAGE_PATH.VERIFICATION_PAGE} component={VerificationPage} />
+
                 <Redirect to={PAGE_PATH.HOME_PAGE} />
               </Switch>
             </Wrapper>
@@ -56,7 +59,5 @@ const App = () => {
     </div>
   )
 }
-
-// Added folder actions with file index.ts where in functions actions and file request-auth.ts with actions requestRegister and requestLogin. Modified file app-header.tsx with component AppHeader. To component AppHeader added types and connected for store. Modified file auth-page.tsx where in component SingIn
 
 export default App;

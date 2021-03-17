@@ -1,1 +1,11 @@
-import {  } from './form-helpers';
+import { 
+    editFormRegister,
+    editFormVerification,
+    editForm,
+} from './form-helpers';
+
+export {
+    editForm,
+    editFormRegister,
+    editFormVerification,
+};
