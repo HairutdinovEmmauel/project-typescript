@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ContentVerificationPage = styled.div`
+const ContentSingIn = styled.div`
     max-width: 1000px;
     display: flex;
     justify-content: center;
@@ -8,8 +8,8 @@ const ContentVerificationPage = styled.div`
     flex-grow: 1;
 `;
 
-const FormVerificationPage = styled.div`
-    max-width: 500px;
+const FormSingIn = styled.div`
+    max-width: 700px;
     margin-top: 30px;
     border-radius: 10px;
     background: #ebf6ff;
@@ -24,7 +24,7 @@ const TitleForm = styled.h2`
 
 const Section = styled.section`
     display: flex;
-    margin: 20px 40px;
+    margin: 20px;
     border-radius: 10px;
     background: #ebf6ff;
     flex-grow: 1;
@@ -65,11 +65,31 @@ const FormInput = styled.input`
     }
 `;
 
+const SelectOther = styled.div`
+    display: flex;
+    justify-content: space-around;
+`;
+
+const RememberMe = styled.input`
+    margin: 5px;
+`;
+
+const RemindPassword = styled.span`
+    display: block;
+    padding: 5px;
+    color: #065da7;
+
+    &:hover {
+        color: #ea4949;
+        text-decoration: underline;
+    }
+`;
+
 const FormActions = styled.div`
 
 `;
 
-const ButtonRegister = styled.button`
+const ButtonLogin = styled.button`
     width: 100%;
     display: block;
     padding: 5px;
@@ -82,9 +102,28 @@ const ButtonRegister = styled.button`
     color: #ffffff;
 `;
 
+const LinkRegister = styled.a`
+    width: 100%;
+    display: block;
+    margin-bottom: 20px; 
+    font-size: 18px;
+    text-align: center;
+    color: #065da7;
+
+    &:hover {   
+        text-decoration: underline;
+        color: red;
+    }
+`;
+
+const SelectUserAccount = styled.div`
+    max-width: 360px;
+    flex-grow: 1;
+`;
+
 export {
-    ContentVerificationPage,
-    FormVerificationPage,
+    ContentSingIn,
+    FormSingIn,
 
     TitleForm,
     Section,
@@ -93,6 +132,13 @@ export {
     FormLabel,
     FormInput,
 
+    SelectOther,
+    RememberMe,
+    RemindPassword,
+
     FormActions,
-    ButtonRegister,
+    ButtonLogin,
+    LinkRegister,
+
+    SelectUserAccount,
 }

@@ -11,3 +11,8 @@ export interface FormVerificationI {
     email: string,
     verificationCode: string,
 }
+
+export interface FormLoginI {
+    email: string,
+    password: string,
+}

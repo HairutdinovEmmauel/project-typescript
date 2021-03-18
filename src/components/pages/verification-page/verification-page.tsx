@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 
 // Styled component
 import {
@@ -8,6 +9,7 @@ import {
     TitleForm,
     Section,
     Form,
+    RenderError,
     FormLabel,
     FormInput,
     FormActions,
@@ -16,9 +18,13 @@ import {
 
 // Types
 import { 
+    AuthStateI,
     UserI, 
     VerificationActionTypes, 
 } from '../../../types/reducers/auth';
+import { 
+    FormVerificationI 
+} from '../../../types/constants/initial-local-state';
 import { RootStateType } from '../../../reducer';
 import { ThunkDispatch } from 'redux-thunk';
 
@@ -26,6 +32,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { 
     INITIAL_LOCAL_STATE,
     FORM_NAME_KEYS,
+    PAGE_PATH,
 } from '../../../constants';
 
 // Utils
@@ -37,9 +44,8 @@ import {
 import {
     requestVerification
 } from '../../../actions'
-import { FormVerificationI } from '../../../types/constants/initial-local-state';
 
-type MapStatePropsType = Pick<UserI, 'email'>
+type MapStatePropsType = Pick<UserI, 'email'> & Pick<AuthStateI, 'loading' | 'error' >
 
 interface MapDispatchPropsI {
     requestVerification: (formVerification: FormVerificationI) => void,
@@ -47,9 +53,27 @@ interface MapDispatchPropsI {
 
 type VerificationPropsType = MapStatePropsType & MapDispatchPropsI;
 
-const VerificationPage: React.FC<VerificationPropsType> = ({ email, requestVerification }) => {
+const VerificationPage: React.FC<VerificationPropsType> = ({ loading, email = '', error, requestVerification }) => {
 
     const [ formVerification, setFormVerification ] = useState({ ...INITIAL_LOCAL_STATE.INITIAL_FORM_VERIFICATION });
+
+    const history = useHistory();
+
+    useEffect(() => {
+
+        const getEmail = history.location.pathname.slice(20);
+
+        if(email === getEmail) {
+            setFormVerification({ ...formVerification, email });
+        }
+
+        if(!getEmail) {
+            history.push(PAGE_PATH.HOME_PAGE);
+        }
+
+        setFormVerification({ ...formVerification, email: getEmail }); 
+
+    }, [])
 
     const sendFormVerification = (event: React.SyntheticEvent<EventTarget>): void => {
         event.preventDefault();
@@ -69,20 +93,24 @@ const VerificationPage: React.FC<VerificationPropsType> = ({ email, requestVerif
                 <TitleForm>Verification page</TitleForm>
                 <Section>
                     <Form onSubmit={sendFormVerification} >
+
+                        <RenderError>{error}</RenderError>
+
                         <FormLabel>Please enter your name</FormLabel>
                         <FormInput 
                             disabled 
-                            value={email} />
+                            value={formVerification.email} />
 
                         <FormLabel>Please enter code verification</FormLabel>
                         <FormInput 
-                            placeholder='123456'
+                            type="number"
+                            placeholder="123456"
                             value={formVerification.verificationCode}
                             name={FORM_NAME_KEYS.FORM_KEYS.verificationCode}
                             onChange={onChangeForm} />
 
                         <FormActions>
-                            <ButtonRegister>Verification</ButtonRegister>
+                            <ButtonRegister type="submit" disabled={loading} >Verification</ButtonRegister>
                         </FormActions>
                     </Form>
                 </Section>
@@ -93,7 +121,9 @@ const VerificationPage: React.FC<VerificationPropsType> = ({ email, requestVerif
 
 const mapStateToProps = ({ auth }: RootStateType) => {
     return {
+        loading: auth.loading,
         email: auth.user.email,
+        error: auth.error,
     }
 }
 
