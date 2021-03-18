@@ -192,17 +192,14 @@ const HomePage: React.FC = () => {
         });
     }
 
-    console.log( slider );
-
     return (
         <Content>
             <WrapperSlider>
                 <Slider>
                     { sliderData.map(({ _id, ImgUrl, title, typography, link }) => {
-                        // console.log( { _id, ImgUrl, title, typography, link } );
                         return (
-                            <div>
-                                <ItemSlider key={_id} style={ { backgroundImage: `url(${ImgUrl})`, right: `${slider.right}px` } } >
+                            <div key={_id}>
+                                <ItemSlider style={ { backgroundImage: `url(${ImgUrl})`, right: `${slider.right}px` } } >
                                     <SliderActions>
                                         <IconButton onClick={shiftsPositionItemsSliderRight} >
                                             <ArrowLeft />

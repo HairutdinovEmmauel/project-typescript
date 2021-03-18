@@ -8,7 +8,7 @@ import {
     VerificationActionTypes,
     LoginActionTypes, 
 } from '../types/reducers/auth';
-import { FormRegisterI, FormVerificationI } from '../types/constants/initial-local-state';
+import { FormLoginI, FormRegisterI, FormVerificationI } from '../types/constants/initial-local-state';
 
 // Constants
 import { ACTION_TYPES } from '../constants';
@@ -49,7 +49,7 @@ export const requestRegister = (formRegister: FormRegisterI): ThunkAction<Promis
     }
 }
 
-export const requestVerification = (form: FormVerificationI): ThunkAction<Promise<void>, RootStateType, unknown, VerificationActionTypes> => {
+export const requestVerification = (formVerification: FormVerificationI): ThunkAction<Promise<void>, RootStateType, unknown, VerificationActionTypes> => {
     return async (dispatch) => {
 
         dispatch({
@@ -58,7 +58,7 @@ export const requestVerification = (form: FormVerificationI): ThunkAction<Promis
         })
 
         try {
-            const res = await axios.post('http://localhost:4000/api/auth/verification', { ...form });
+            const res = await axios.post('http://localhost:4000/api/auth/verification', { ...formVerification, verificationCode: +formVerification.verificationCode });
 
             dispatch({
                 type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_VERIFICATION_SUCCESS,
@@ -84,7 +84,7 @@ export const requestVerification = (form: FormVerificationI): ThunkAction<Promis
     }
 }
 
-export const requestLogin = (): ThunkAction<Promise<void>, RootStateType, unknown, LoginActionTypes> => { 
+export const requestLogin = (formLogin: FormLoginI): ThunkAction<Promise<void>, RootStateType, unknown, LoginActionTypes> => { 
     return async (dispatch) => {
 
         dispatch({
@@ -94,7 +94,7 @@ export const requestLogin = (): ThunkAction<Promise<void>, RootStateType, unknow
 
         try {
 
-            const res = await axios.post('/');
+            const res = await axios.post('http://localhost:4000/api/auth/login', { ...formLogin });
 
             dispatch({
                 type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_LOGIN_SUCCESS,
@@ -109,7 +109,7 @@ export const requestLogin = (): ThunkAction<Promise<void>, RootStateType, unknow
 
             dispatch({
                 type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_LOGIN_FAILURE,
-                payload: error.res.data.message,
+                payload: error.response.data.message,
             })
         } finally {
             

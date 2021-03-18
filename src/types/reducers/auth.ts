@@ -13,8 +13,9 @@ export interface PayloadUserRegisterI {
     message: string,
 } 
 
-export interface PayloadUserVerificationI {
+export interface PayloadDataUser {
     user: UserI,
+    token: string,
     message: string,
 } 
 
@@ -23,7 +24,7 @@ export interface AuthStateI {
     user: UserI,
     isAuth: boolean,
     isAdmin: boolean,
-    linkVerification: null | string,
+    linkVerification: string,
     error: null | string,
 }
 
@@ -51,7 +52,7 @@ interface StartedRequestVerification {
 
 interface RequestVerificationSuccess {
     type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_VERIFICATION_SUCCESS,
-    payload: PayloadUserVerificationI,
+    payload: PayloadDataUser,
 }
 
 interface RequestVerificationFailure {
@@ -68,7 +69,7 @@ interface StartedRequestLogin {
 
 interface RequestLoginSuccess {
     type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_LOGIN_SUCCESS,
-    payload: any[],
+    payload: PayloadDataUser,
 }
 
 interface RequestLoginFailure {

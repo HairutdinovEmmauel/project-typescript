@@ -1,5 +1,6 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 
 // Customer components
 import AppHeader from '../app-header';
@@ -8,9 +9,9 @@ import HomePage from '../pages/home-page';
 import AboutPage from '../pages/about-page';
 import ContactPage from '../pages/contact-page';
 import AppFooter from '../app-footer';
+import SingIn from '../pages/sing-in';
 import SingUp from '../pages/sing-up';
 import VerificationPage from '../pages/verification-page';
-// import SingUp from '../pages/sing-up';
 
 // Styled components 
 import {
@@ -18,17 +19,27 @@ import {
   Wrapper,
 } from './styled-components-app';
 
+// Types 
+import { RootStateType } from '../../reducer';
+import { AuthStateI } from '../../types/reducers/auth';
+
 import {
   PAGE_PATH
 } from '../../constants';
- 
-const App = () => {
 
-  const Auth: boolean = true;
+type MapStatePropsType = Pick<AuthStateI, 'linkVerification' >
+
+type AppPropsType = MapStatePropsType;
+ 
+const App: React.FC<AppPropsType> = ({ linkVerification }) => {
+
+  const history = useHistory();
+
+  const PATH_VERIFICATION  = history.location.pathname.slice(0, 20) === linkVerification.slice(21) ? history.location.pathname : linkVerification;
 
   return (
     <div>
-      { Auth && (
+      { true && (
         <>
           <AppHeader />
 
@@ -43,9 +54,11 @@ const App = () => {
                 
                 <Route path={PAGE_PATH.CONTACT_PAGE} component={ContactPage} />
 
-                <Route path={PAGE_PATH.SING_IN} component={SingUp} />
+                <Route path={PAGE_PATH.SING_IN} component={SingIn} />
 
-                <Route path={PAGE_PATH.VERIFICATION_PAGE} component={VerificationPage} />
+                <Route path={PAGE_PATH.SING_UP} component={SingUp} />
+
+                <Route path={PATH_VERIFICATION} component={VerificationPage} />
 
                 <Redirect to={PAGE_PATH.HOME_PAGE} />
               </Switch>
@@ -60,4 +73,10 @@ const App = () => {
   )
 }
 
-export default App;
+const mapStateToProps = ({ auth }: RootStateType) => {
+  return {
+    linkVerification: auth.linkVerification,
+  }
+}
+
+export default connect(mapStateToProps, {})(App);

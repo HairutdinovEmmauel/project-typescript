@@ -4,12 +4,12 @@ const ContentSingUp = styled.div`
     max-width: 1000px;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-grow: 1;
 `;
 
 const FormSingUp = styled.div`
     max-width: 700px;
-    margin-top: 30px;
     border-radius: 10px;
     background: #ebf6ff;
     flex-grow: 1;
@@ -34,6 +34,12 @@ const Form = styled.form`
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+`;
+
+const RenderError = styled.p`
+    text-align: center;
+    color: red;
+    font-size: 18px;
 `;
 
 const FormLabel = styled.label`
@@ -120,6 +126,7 @@ export {
     TitleForm,
     Section,
     Form,
+    RenderError,
     FormLabel,
     FormInput,
 

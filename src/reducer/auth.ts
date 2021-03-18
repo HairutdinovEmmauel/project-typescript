@@ -1,5 +1,5 @@
 import { ACTION_TYPES } from '../constants';
-import { AuthStateI, AuthActionTypes, UserI } from '../types/reducers/auth';
+import { AuthStateI, AuthActionTypes, UserI, PayloadDataUser} from '../types/reducers/auth';
 
 const initialState: AuthStateI = {
     loading: false,
@@ -10,10 +10,12 @@ const initialState: AuthStateI = {
     error: null,
 } 
 
-const addDataRegisteredUser = (dataUser: UserI): UserI => {
+const addDataUser = (dataUser: PayloadDataUser): UserI => {
+
+    localStorage.setItem('token', dataUser.token);
 
     return {
-        ...dataUser,
+        ...dataUser.user,
     }
 }
 
@@ -27,10 +29,26 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthStateI 
         case ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_REGISTER_SUCCESS: 
             return {
                 ...state,
-                user: addDataRegisteredUser(action.payload.user),
-                linkVerification: action.payload.linkVerification,
+                user: action.payload.user,
+                linkVerification: action.payload.linkVerification.slice(21),
             }
         case ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_REGISTER_FAILURE: 
+            return {
+                ...state,
+                error: action.payload,
+            }
+        case ACTION_TYPES.AUTH_ACTION_TYPES.STARTED_REQUEST_VERIFICATION:
+            return {
+                ...state,
+                loading: action.payload,   
+            }
+        case ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_VERIFICATION_SUCCESS: 
+            return {
+                ...state,
+                user: addDataUser(action.payload),
+                isAuth: true,
+            }
+        case ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_VERIFICATION_FAILURE: 
             return {
                 ...state,
                 error: action.payload,
@@ -43,12 +61,12 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthStateI 
         case ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_LOGIN_SUCCESS: 
             return {
                 ...state,
-
+                user: addDataUser(action.payload),
             }
         case ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_LOGIN_FAILURE: 
             return {
                 ...state,
-
+                error: action.payload,
             }
         default: 
             return {

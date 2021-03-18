@@ -9,6 +9,7 @@ import {
     TitleForm,
     Section,
     Form,
+    RenderError,
     FormLabel,
     FormInput,
     SelectOther,
@@ -29,7 +30,6 @@ import { FormRegisterI } from '../../../types/constants/initial-local-state';
 import { 
     INITIAL_LOCAL_STATE,
     FORM_NAME_KEYS,
-    PAGE_PATH,
 } from '../../../constants';
 
 // Utils
@@ -40,7 +40,7 @@ import {
 // Actions
 import { requestRegister } from '../../../actions';
 
-type MapStatePropsType = Pick<AuthStateI, 'loading' | 'error'| 'user'>
+type MapStatePropsType = Pick<AuthStateI, 'loading' | 'error'| 'user' | 'linkVerification'>
 
 interface MapDispatchPropsI {
     requestRegister: (formRegister: FormRegisterI) => void
@@ -48,14 +48,14 @@ interface MapDispatchPropsI {
 
 type SingUpPropsType = MapStatePropsType & MapDispatchPropsI;
 
-const SingUp: React.FC<SingUpPropsType> = ({ loading, user, error, requestRegister }) => {
+const SingUp: React.FC<SingUpPropsType> = ({ loading, user, linkVerification, error, requestRegister }) => {
 
     const [ formRegister, setFormRegister ] = useState({ ...INITIAL_LOCAL_STATE.INITIAL_FORM_REGISTER });
 
     const history = useHistory();
 
     if(user.email) {
-        history.push(PAGE_PATH.VERIFICATION_PAGE);
+        history.push(linkVerification);
     }
     
     const sendFormRegister = (event: React.SyntheticEvent<EventTarget>): void => {
@@ -73,9 +73,12 @@ const SingUp: React.FC<SingUpPropsType> = ({ loading, user, error, requestRegist
     return (
         <ContentSingUp>
             <FormSingUp>
-                <TitleForm>Authorization</TitleForm>
+                <TitleForm>Sing up</TitleForm>
                 <Section>
                     <Form onSubmit={sendFormRegister} >
+
+                        <RenderError>{error}</RenderError>
+
                         <FormLabel>Please enter your name</FormLabel>
                         <FormInput 
                             type="text" 
@@ -132,7 +135,7 @@ const SingUp: React.FC<SingUpPropsType> = ({ loading, user, error, requestRegist
                             <RemindPassword>Ramind password</RemindPassword>
                         </SelectOther>
                         <FormActions>
-                            <ButtonRegister>Register</ButtonRegister>
+                            <ButtonRegister type='submit' disabled={loading} >Register</ButtonRegister>
                         </FormActions>
                     </Form>
                     <SelectUserAccount>
@@ -147,8 +150,9 @@ const SingUp: React.FC<SingUpPropsType> = ({ loading, user, error, requestRegist
 const mapStateToProps = ({ auth }: RootStateType) => {
     return {
         loading: auth.loading,
-        error: auth.error,
         user: auth.user,
+        linkVerification: auth.linkVerification,
+        error: auth.error,
     }
 }
 
