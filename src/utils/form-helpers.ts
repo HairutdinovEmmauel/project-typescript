@@ -6,3 +6,7 @@ export function editForm<FormType> (form: FormType, event: React.SyntheticEvent<
         [event.currentTarget.name]: event.currentTarget.value,
     };
 }
+
+
+
+
