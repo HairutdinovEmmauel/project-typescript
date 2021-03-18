@@ -1,0 +1,1 @@
+export const LOGOTYPE_BOX: string = 'http://www.pt-mkp.com/images/product_icon.png?crc=107442653';
