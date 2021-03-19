@@ -1,18 +1,21 @@
-import { ACTION_TYPES } from '../constants';
-import { AuthStateI, AuthActionTypes, UserI, PayloadDataUser} from '../types/reducers/auth';
+import { ACTION_TYPES, INITIAL_STATE } from '../constants';
+import { AuthStateI, AuthActionTypes, FullDataUserI, RegisterDataUserI, PayloadFullDataUser, PayloadUserRegisterI} from '../types/reducers/auth';
 
 const initialState: AuthStateI = {
     loading: false,
-    user: {},
+    user: INITIAL_STATE.initialAuthStateUser,
     isAuth: false, 
     isAdmin: false,
     linkVerification: 'http://localhost:3000/verification/email:',
+    isSendCodeEditProfile: false,
     error: null,
 } 
 
-const addDataUser = (dataUser: PayloadDataUser): UserI => {
+function addDataUser(dataUser: PayloadFullDataUser): FullDataUserI {
 
-    localStorage.setItem('token', dataUser.token);
+    if(dataUser.token) {
+        localStorage.setItem('token', dataUser.token);
+    }
 
     return {
         ...dataUser.user,
@@ -30,7 +33,6 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthStateI 
             return {
                 ...state,
                 user: action.payload.user,
-                linkVerification: action.payload.linkVerification.slice(21),
             }
         case ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_REGISTER_FAILURE: 
             return {
@@ -62,8 +64,24 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthStateI 
             return {
                 ...state,
                 user: addDataUser(action.payload),
+                isAuth: true,
             }
         case ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_LOGIN_FAILURE: 
+            return {
+                ...state,
+                error: action.payload,
+            }
+        case ACTION_TYPES.AUTH_ACTION_TYPES.STARTED_REQUEST_SEND_MESSAGE_CODE_EDIT_PROFILE: 
+            return {
+                ...state,
+                loading: action.payload,
+            }
+        case ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_SEND_MESSAGE_CODE_EDIT_PROFILE_SUCCESS: 
+            return {
+                ...state,
+                isSendCodeEditProfile: action.payload,
+            }
+        case ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_SEND_MESSAGE_CODE_EDIT_PROFILE_FAILURE: 
             return {
                 ...state,
                 error: action.payload,

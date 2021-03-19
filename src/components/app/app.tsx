@@ -12,6 +12,7 @@ import AppFooter from '../app-footer';
 import SingIn from '../pages/sing-in';
 import SingUp from '../pages/sing-up';
 import VerificationPage from '../pages/verification-page';
+import ProfilePage from '../pages/profile-page';
 
 // Styled components 
 import {
@@ -27,19 +28,48 @@ import {
   PAGE_PATH
 } from '../../constants';
 
-type MapStatePropsType = Pick<AuthStateI, 'linkVerification' >
+type MapStatePropsType = Pick<AuthStateI, 'isAuth' >
 
 type AppPropsType = MapStatePropsType;
  
-const App: React.FC<AppPropsType> = ({ linkVerification }) => {
+const App: React.FC<AppPropsType> = ({ isAuth }) => {
 
   const history = useHistory();
 
-  const PATH_VERIFICATION  = history.location.pathname.slice(0, 20) === linkVerification.slice(21) ? history.location.pathname : linkVerification;
+  const PATH_VERIFICATION  = history.location.pathname.slice(0, 20) === PAGE_PATH.VERIFICATION_PAGE 
+                            ? history.location.pathname : PAGE_PATH.VERIFICATION_PAGE;
 
   return (
     <div>
-      { true && (
+      { isAuth ? (
+        <>
+          <AppHeader />
+
+          <ContentApp>
+            <Wrapper>
+              <SideBar />
+
+              <Switch>
+                <Route path={PAGE_PATH.HOME_PAGE} component={HomePage} exact />
+
+                <Route path={PAGE_PATH.ABOUT_PAGE} component={AboutPage} />
+                
+                <Route path={PAGE_PATH.CONTACT_PAGE} component={ContactPage} />
+
+                <Route path={PAGE_PATH.SING_IN} component={SingIn} />
+
+                <Route path={PAGE_PATH.SING_UP} component={SingUp} />
+
+                <Route path={PAGE_PATH.PROFILE_PAGE} component={ProfilePage} />
+
+                <Redirect to={PAGE_PATH.HOME_PAGE} />
+              </Switch>
+            </Wrapper>
+          </ContentApp>
+          
+          <AppFooter />
+        </>
+      ) : (
         <>
           <AppHeader />
 
@@ -75,7 +105,7 @@ const App: React.FC<AppPropsType> = ({ linkVerification }) => {
 
 const mapStateToProps = ({ auth }: RootStateType) => {
   return {
-    linkVerification: auth.linkVerification,
+    isAuth: auth.isAuth,
   }
 }
 

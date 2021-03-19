@@ -102,7 +102,7 @@ const ButtonLogin = styled.button`
     color: #ffffff;
 `;
 
-const LinkRegister = styled.a`
+const LinkRegister = styled.div`
     width: 100%;
     display: block;
     margin-bottom: 20px; 

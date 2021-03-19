@@ -7,8 +7,10 @@ import {
     RegisterActionTypes,
     VerificationActionTypes,
     LoginActionTypes, 
+    SendMessageMailCodeEditProfileActionType,
+    EditProfileActionType,
 } from '../types/reducers/auth';
-import { FormLoginI, FormRegisterI, FormVerificationI } from '../types/constants/initial-local-state';
+import { FormLoginI, FormProfileI, FormRegisterI, FormVerificationI } from '../types/constants/initial-local-state';
 
 // Constants
 import { ACTION_TYPES } from '../constants';
@@ -119,5 +121,94 @@ export const requestLogin = (formLogin: FormLoginI): ThunkAction<Promise<void>, 
             })
         }
 
+    }
+}
+
+export const requestSendMessageMailCode = (): ThunkAction<Promise<void>, RootStateType, unknown, SendMessageMailCodeEditProfileActionType> => {
+    return async (dispatch) => {
+        
+        dispatch({
+            type: ACTION_TYPES.AUTH_ACTION_TYPES.STARTED_REQUEST_SEND_MESSAGE_CODE_EDIT_PROFILE,
+            payload: true,
+        })
+
+        try {
+
+            const res = await axios({
+                method: 'post',
+                url: 'http://localhost:4000/api/auth/send-message-mail-code-form-edit-profile',
+                headers: {
+                    authorization: localStorage.getItem('token'),
+                }
+            });
+
+            dispatch({
+                type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_SEND_MESSAGE_CODE_EDIT_PROFILE_SUCCESS,
+                payload: res.data.isSendCodeEditProfile,
+            })
+
+            dispatch({
+                type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_SEND_MESSAGE_CODE_EDIT_PROFILE_FAILURE,
+                payload: null,
+            })
+
+        } catch (error) {
+            dispatch({
+                type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_SEND_MESSAGE_CODE_EDIT_PROFILE_FAILURE,
+                payload: error.response.data.message,
+            })
+        } finally {
+            dispatch({
+                type: ACTION_TYPES.AUTH_ACTION_TYPES.STARTED_REQUEST_SEND_MESSAGE_CODE_EDIT_PROFILE,
+                payload: false, 
+            })
+        }
+    }
+}   
+
+export const requestEditedProfile = (formProfile: FormProfileI): ThunkAction<Promise<void>, RootStateType, unknown, EditProfileActionType> => {
+    return async (dispatch) => {
+
+        dispatch({
+            type: ACTION_TYPES.AUTH_ACTION_TYPES.STARTED_REQUEST_EDIT_PROFILE,
+            payload: true,
+        })
+
+        try {
+
+            const res = await axios({
+                method: 'put',
+                url: 'http://localhost:4000/api/auth/edit-profile',
+                data: {
+                    ...formProfile,
+                },
+                headers: {
+                    authorization: localStorage.getItem('token'),
+                }
+            })
+
+            dispatch({
+                type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_EDIT_PROFILE_SUCCESS,
+                payload: res.data.user,
+            })
+
+            dispatch({
+                type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_EDIT_PROFILE_FAILURE,
+                payload: null,
+            })
+
+        } catch (error) {
+
+            dispatch({
+                type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_EDIT_PROFILE_FAILURE,
+                payload: error.response.data.message,
+            })
+        } finally {
+
+            dispatch({
+                type: ACTION_TYPES.AUTH_ACTION_TYPES.STARTED_REQUEST_EDIT_PROFILE,
+                payload: false,
+            })
+        }
     }
 }

@@ -45,7 +45,7 @@ interface MapDispatchPropsI {
 
 type AuthPropsType = MapStatePropsI & MapDispatchPropsI;
 
-const AppHeader: React.FC<AuthPropsType> = ({ loading, user, isAdmin, isAuth, linkVerification, error }) => {
+const AppHeader: React.FC<AuthPropsType> = ({ loading, user, isAdmin, isAuth, linkVerification, isSendCodeEditProfile, error }) => {
 
     const [ openNavigation, setopenNavigation ] = useState(false);
     const refContainer = useRef(null);
@@ -71,8 +71,6 @@ const AppHeader: React.FC<AuthPropsType> = ({ loading, user, isAdmin, isAuth, li
     }
 
     useOutsideAlerter(refContainer);
-
-    
 
     return (
         <AppBar>
@@ -102,15 +100,21 @@ const AppHeader: React.FC<AuthPropsType> = ({ loading, user, isAdmin, isAuth, li
                                     openNavigation && (
                                         <NavigationAccount ref={refContainer} >
                                             <NavigationPanel>
-                                                <ItemNavigationPanel>
-                                                    Profile
-                                                </ItemNavigationPanel>
-                                                <ItemNavigationPanel>
-                                                    Your orders
-                                                </ItemNavigationPanel>
-                                                <ItemNavigationPanel>
-                                                    Sing out
-                                                </ItemNavigationPanel>
+                                                <Link to={PAGE_PATH.PROFILE_PAGE}>
+                                                    <ItemNavigationPanel>
+                                                        Profile
+                                                    </ItemNavigationPanel>
+                                                </Link>
+                                                <Link to={PAGE_PATH.HOME_PAGE} >
+                                                    <ItemNavigationPanel>
+                                                        Your orders
+                                                    </ItemNavigationPanel>
+                                                </Link>
+                                                <Link to={PAGE_PATH.HOME_PAGE} >
+                                                    <ItemNavigationPanel>
+                                                        Sing out
+                                                    </ItemNavigationPanel>
+                                                </Link>
                                             </NavigationPanel>
                                         </NavigationAccount>
                                     ) 
@@ -137,6 +141,7 @@ const mapStateToProps = ({ auth }: RootStateType) => {
         isAdmin: auth.isAdmin,
         isAuth: auth.isAuth,
         linkVerification: auth.linkVerification,
+        isSendCodeEditProfile: auth.isSendCodeEditProfile,
         error: auth.error,
     }
 }

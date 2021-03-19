@@ -7,6 +7,16 @@ export interface FormRegisterI {
     repeatPassword: string,
 }
 
+export interface FormProfileI {
+    name?: string,
+    surname?: string,
+    telphone?: number,
+    email?: string,
+    password?: string,
+    repeatPassword?: string,
+    verificationCode: string,
+}
+
 export interface FormVerificationI {
     email: string,
     verificationCode: string,

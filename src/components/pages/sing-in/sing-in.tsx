@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link }from 'react-router-dom';
+import { Link, useHistory }from 'react-router-dom';
 
 // Styled components
 import {
@@ -46,7 +46,7 @@ import {
 // Actions
 import { requestLogin } from '../../../actions';
 
-type MapStatePropsType = Pick<AuthStateI, 'loading' | 'error'>;
+type MapStatePropsType = Pick<AuthStateI, 'loading' | 'error' | 'isAuth'>;
 
 interface MapDispatchPropsI {
     requestLogin: (formLogin: FormLoginI ) => void,
@@ -54,9 +54,20 @@ interface MapDispatchPropsI {
 
 type SingInPropsType = MapStatePropsType & MapDispatchPropsI;
 
-const SingIn: React.FC<SingInPropsType> = ({ loading, error, requestLogin }) => {
+const SingIn: React.FC<SingInPropsType> = ({ loading, isAuth, error, requestLogin }) => {
 
     const [ formLogin, setFormLogin ] = useState({ ...INITIAL_LOCAL_STATE.INITIAL_FORM_LOGIN });
+
+    const history = useHistory();
+
+    useEffect(() => {
+
+        console.log(isAuth);
+
+        if(isAuth) {
+            history.push(PAGE_PATH.HOME_PAGE);
+        }
+    }, [ isAuth ] );
 
     const sendFormLogin = (event: React.SyntheticEvent<EventTarget>) => {
         event.preventDefault();
@@ -125,6 +136,7 @@ const SingIn: React.FC<SingInPropsType> = ({ loading, error, requestLogin }) => 
 const mapStateToProps = ({ auth }: RootStateType) => {
     return {
         loading: auth.loading,
+        isAuth: auth.isAuth,
         error: auth.error,
     }
 }

@@ -1,23 +1,28 @@
 import { ACTION_TYPES } from "../../constants";
 
-export interface UserI {
-    name?: string,
-    surname?: string,
-    telphone?: number,
-    email?: string,
+export interface RegisterDataUserI {
+    email: string,
+}
+
+export interface FullDataUserI {
+    name: string,
+    surname: string,
+    telphone: number,
+    email: string,
 }
 
 export interface PayloadUserRegisterI {
     user: UserI,
-    linkVerification: string,
     message: string,
 } 
 
-export interface PayloadDataUser {
-    user: UserI,
+export interface PayloadFullDataUser {
+    user: FullDataUserI,
     token: string,
     message: string,
 } 
+
+type UserI = RegisterDataUserI | FullDataUserI;
 
 export interface AuthStateI {
     loading: boolean,
@@ -25,6 +30,7 @@ export interface AuthStateI {
     isAuth: boolean,
     isAdmin: boolean,
     linkVerification: string,
+    isSendCodeEditProfile: boolean,
     error: null | string,
 }
 
@@ -52,7 +58,7 @@ interface StartedRequestVerification {
 
 interface RequestVerificationSuccess {
     type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_VERIFICATION_SUCCESS,
-    payload: PayloadDataUser,
+    payload: PayloadFullDataUser,
 }
 
 interface RequestVerificationFailure {
@@ -69,7 +75,7 @@ interface StartedRequestLogin {
 
 interface RequestLoginSuccess {
     type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_LOGIN_SUCCESS,
-    payload: PayloadDataUser,
+    payload: PayloadFullDataUser,
 }
 
 interface RequestLoginFailure {
@@ -79,6 +85,42 @@ interface RequestLoginFailure {
 
 export type LoginActionTypes = StartedRequestLogin | RequestLoginSuccess | RequestLoginFailure;
 
+interface StartedRequestSendMessageMailCode {
+    type: ACTION_TYPES.AUTH_ACTION_TYPES.STARTED_REQUEST_SEND_MESSAGE_CODE_EDIT_PROFILE,
+    payload: boolean,
+}
+
+interface RequestSendMessageMailCodeSuccess {
+    type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_SEND_MESSAGE_CODE_EDIT_PROFILE_SUCCESS,
+    payload: boolean,
+}
+
+interface RequestSendMEssageMailCodeFailure {
+    type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_SEND_MESSAGE_CODE_EDIT_PROFILE_FAILURE,
+    payload: null | string;
+}
+
+export type SendMessageMailCodeEditProfileActionType = StartedRequestSendMessageMailCode | RequestSendMessageMailCodeSuccess | RequestSendMEssageMailCodeFailure;
+
+interface StartedRequestEditProfile {
+    type: ACTION_TYPES.AUTH_ACTION_TYPES.STARTED_REQUEST_EDIT_PROFILE,
+    payload: boolean,
+}
+
+interface RequestEditProfileSuccess {
+    type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_EDIT_PROFILE_SUCCESS,
+    payload: object,
+}
+
+interface RequestEditProfileFailure {
+    type: ACTION_TYPES.AUTH_ACTION_TYPES.REQUEST_EDIT_PROFILE_FAILURE,
+    payload: null | string,
+}
+
+export type EditProfileActionType = StartedRequestEditProfile | RequestEditProfileSuccess | RequestEditProfileFailure;
+
 export type AuthActionTypes = StartedRequestRegister | RequestRegisterSuccess | RequestRegisterFailure 
                             | StartedRequestVerification | RequestVerificationSuccess | RequestVerificationFailure
-                            | StartedRequestLogin | RequestLoginSuccess | RequestLoginFailure;
+                            | StartedRequestLogin | RequestLoginSuccess | RequestLoginFailure 
+                            | StartedRequestSendMessageMailCode | RequestSendMessageMailCodeSuccess | RequestSendMEssageMailCodeFailure
+                            | StartedRequestEditProfile | RequestEditProfileSuccess | RequestEditProfileFailure;

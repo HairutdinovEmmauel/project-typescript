@@ -48,7 +48,7 @@ const RightNavigationMenu = styled.div`
 
 const NavigationAccount = styled.div`
     position: absolute;
-    max-width: 200px;
+    width: 120px;
     background: #b7d4ec;
     color: #2f396b;
     border-radius: 5px;
@@ -60,14 +60,24 @@ const NavigationAccount = styled.div`
 const NavigationPanel = styled.ul`
     width: 100%;
     list-style-type: none;
-    margin: 5px 0;
+    margin: 0;
     padding: 0;
+    border-radius: 5px;
     cursor: pointer;
+
+    &:first-child {
+        border-radius: 5px; 
+    }
+
+    &:last-child {
+        border-radius: 5px; 
+    }
 `;
 
 const ItemNavigationPanel = styled.li`
-    padding: 2px 10px;   
+    padding: 5px 10px;   
     text-align: start;
+    border-bottom: 1px solid #065da7;
 
     &:hover {
         background: #ea4949;

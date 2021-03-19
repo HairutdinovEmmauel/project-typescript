@@ -19,7 +19,7 @@ import {
 // Types
 import { 
     AuthStateI,
-    UserI, 
+    RegisterDataUserI, 
     VerificationActionTypes, 
 } from '../../../types/reducers/auth';
 import { 
@@ -45,7 +45,7 @@ import {
     requestVerification
 } from '../../../actions'
 
-type MapStatePropsType = Pick<UserI, 'email'> & Pick<AuthStateI, 'loading' | 'error' >
+type MapStatePropsType = Pick<RegisterDataUserI, 'email'> & Pick<AuthStateI, 'loading' | 'error' | 'isAuth' > 
 
 interface MapDispatchPropsI {
     requestVerification: (formVerification: FormVerificationI) => void,
@@ -53,7 +53,7 @@ interface MapDispatchPropsI {
 
 type VerificationPropsType = MapStatePropsType & MapDispatchPropsI;
 
-const VerificationPage: React.FC<VerificationPropsType> = ({ loading, email = '', error, requestVerification }) => {
+const VerificationPage: React.FC<VerificationPropsType> = ({ loading, email = '', isAuth, error, requestVerification }) => {
 
     const [ formVerification, setFormVerification ] = useState({ ...INITIAL_LOCAL_STATE.INITIAL_FORM_VERIFICATION });
 
@@ -73,7 +73,13 @@ const VerificationPage: React.FC<VerificationPropsType> = ({ loading, email = ''
 
         setFormVerification({ ...formVerification, email: getEmail }); 
 
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if(isAuth) {
+            return history.push(PAGE_PATH.HOME_PAGE);
+        }
+    });
 
     const sendFormVerification = (event: React.SyntheticEvent<EventTarget>): void => {
         event.preventDefault();
@@ -123,6 +129,7 @@ const mapStateToProps = ({ auth }: RootStateType) => {
     return {
         loading: auth.loading,
         email: auth.user.email,
+        isAuth: auth.isAuth,
         error: auth.error,
     }
 }
